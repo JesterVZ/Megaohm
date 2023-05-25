@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:megaohm_app/data/entities/get_data/get_data_response.dart';
 import 'package:megaohm_app/domain/usecases/login/get_data_usecase.dart';
 
 part 'get_data_event.dart';

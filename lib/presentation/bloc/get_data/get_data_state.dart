@@ -4,5 +4,6 @@ part of 'get_data_bloc.dart';
 class GetDataState with _$GetDataState {
   const factory GetDataState.initial() = _Initial;
   const factory GetDataState.loading() = _Loading;
-  //const factory GetDataState.getData(GetDataRes)
+  const factory GetDataState.getData(GetDataResponse response) = _GetData;
+  const factory GetDataState.error(String message) = _ErrorGetData;
 }

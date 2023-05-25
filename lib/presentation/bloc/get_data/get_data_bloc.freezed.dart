@@ -168,18 +168,24 @@ mixin _$GetDataState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(GetDataResponse response)? getData,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -187,18 +193,24 @@ mixin _$GetDataState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_GetData value) getData,
+    required TResult Function(_ErrorGetData value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_GetData value)? getData,
+    TResult? Function(_ErrorGetData value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_GetData value)? getData,
+    TResult Function(_ErrorGetData value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -261,6 +273,8 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(String message) error,
   }) {
     return initial();
   }
@@ -270,6 +284,8 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(String message)? error,
   }) {
     return initial?.call();
   }
@@ -279,6 +295,8 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(GetDataResponse response)? getData,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -292,6 +310,8 @@ class _$_Initial implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_GetData value) getData,
+    required TResult Function(_ErrorGetData value) error,
   }) {
     return initial(this);
   }
@@ -301,6 +321,8 @@ class _$_Initial implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_GetData value)? getData,
+    TResult? Function(_ErrorGetData value)? error,
   }) {
     return initial?.call(this);
   }
@@ -310,6 +332,8 @@ class _$_Initial implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_GetData value)? getData,
+    TResult Function(_ErrorGetData value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -362,6 +386,8 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
+    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(String message) error,
   }) {
     return loading();
   }
@@ -371,6 +397,8 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
+    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(String message)? error,
   }) {
     return loading?.call();
   }
@@ -380,6 +408,8 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
+    TResult Function(GetDataResponse response)? getData,
+    TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -393,6 +423,8 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
+    required TResult Function(_GetData value) getData,
+    required TResult Function(_ErrorGetData value) error,
   }) {
     return loading(this);
   }
@@ -402,6 +434,8 @@ class _$_Loading implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
+    TResult? Function(_GetData value)? getData,
+    TResult? Function(_ErrorGetData value)? error,
   }) {
     return loading?.call(this);
   }
@@ -411,6 +445,8 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
+    TResult Function(_GetData value)? getData,
+    TResult Function(_ErrorGetData value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -422,4 +458,304 @@ class _$_Loading implements _Loading {
 
 abstract class _Loading implements GetDataState {
   const factory _Loading() = _$_Loading;
+}
+
+/// @nodoc
+abstract class _$$_GetDataCopyWith<$Res> {
+  factory _$$_GetDataCopyWith(
+          _$_GetData value, $Res Function(_$_GetData) then) =
+      __$$_GetDataCopyWithImpl<$Res>;
+  @useResult
+  $Res call({GetDataResponse response});
+
+  $GetDataResponseCopyWith<$Res> get response;
+}
+
+/// @nodoc
+class __$$_GetDataCopyWithImpl<$Res>
+    extends _$GetDataStateCopyWithImpl<$Res, _$_GetData>
+    implements _$$_GetDataCopyWith<$Res> {
+  __$$_GetDataCopyWithImpl(_$_GetData _value, $Res Function(_$_GetData) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? response = null,
+  }) {
+    return _then(_$_GetData(
+      null == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as GetDataResponse,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GetDataResponseCopyWith<$Res> get response {
+    return $GetDataResponseCopyWith<$Res>(_value.response, (value) {
+      return _then(_value.copyWith(response: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_GetData implements _GetData {
+  const _$_GetData(this.response);
+
+  @override
+  final GetDataResponse response;
+
+  @override
+  String toString() {
+    return 'GetDataState.getData(response: $response)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_GetData &&
+            (identical(other.response, response) ||
+                other.response == response));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, response);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GetDataCopyWith<_$_GetData> get copyWith =>
+      __$$_GetDataCopyWithImpl<_$_GetData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(String message) error,
+  }) {
+    return getData(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(String message)? error,
+  }) {
+    return getData?.call(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(GetDataResponse response)? getData,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (getData != null) {
+      return getData(response);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_GetData value) getData,
+    required TResult Function(_ErrorGetData value) error,
+  }) {
+    return getData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_GetData value)? getData,
+    TResult? Function(_ErrorGetData value)? error,
+  }) {
+    return getData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_GetData value)? getData,
+    TResult Function(_ErrorGetData value)? error,
+    required TResult orElse(),
+  }) {
+    if (getData != null) {
+      return getData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetData implements GetDataState {
+  const factory _GetData(final GetDataResponse response) = _$_GetData;
+
+  GetDataResponse get response;
+  @JsonKey(ignore: true)
+  _$$_GetDataCopyWith<_$_GetData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ErrorGetDataCopyWith<$Res> {
+  factory _$$_ErrorGetDataCopyWith(
+          _$_ErrorGetData value, $Res Function(_$_ErrorGetData) then) =
+      __$$_ErrorGetDataCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$_ErrorGetDataCopyWithImpl<$Res>
+    extends _$GetDataStateCopyWithImpl<$Res, _$_ErrorGetData>
+    implements _$$_ErrorGetDataCopyWith<$Res> {
+  __$$_ErrorGetDataCopyWithImpl(
+      _$_ErrorGetData _value, $Res Function(_$_ErrorGetData) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_ErrorGetData(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ErrorGetData implements _ErrorGetData {
+  const _$_ErrorGetData(this.message);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'GetDataState.error(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ErrorGetData &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorGetDataCopyWith<_$_ErrorGetData> get copyWith =>
+      __$$_ErrorGetDataCopyWithImpl<_$_ErrorGetData>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(String message) error,
+  }) {
+    return error(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(String message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(GetDataResponse response)? getData,
+    TResult Function(String message)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_GetData value) getData,
+    required TResult Function(_ErrorGetData value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_GetData value)? getData,
+    TResult? Function(_ErrorGetData value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_GetData value)? getData,
+    TResult Function(_ErrorGetData value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ErrorGetData implements GetDataState {
+  const factory _ErrorGetData(final String message) = _$_ErrorGetData;
+
+  String get message;
+  @JsonKey(ignore: true)
+  _$$_ErrorGetDataCopyWith<_$_ErrorGetData> get copyWith =>
+      throw _privateConstructorUsedError;
 }

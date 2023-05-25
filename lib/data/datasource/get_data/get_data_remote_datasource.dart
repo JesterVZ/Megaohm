@@ -3,7 +3,7 @@ import 'package:megaohm_app/base/enums/methods/methods.dart';
 import 'package:megaohm_app/base/http/http_client.dart';
 import 'package:megaohm_app/const/app.dart';
 import 'package:megaohm_app/core/error/exceptions.dart';
-import 'package:megaohm_app/data/entities/login/get_data_request.dart';
+import 'package:megaohm_app/data/entities/get_data/get_data_request.dart';
 
 abstract class GetDataRemoteDataSource {
   Future<bool> getData(GetDataRequest request);

@@ -27,10 +27,18 @@ class MyApp extends StatelessWidget {
                 borderSide: BorderSide(width: 1, color: AppColors.appColors),
               )),
           textTheme: Theme.of(context).textTheme.copyWith(
-              headlineMedium: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.appColors[400])),
+              titleLarge: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontSize: 30, color: AppColors.whiteColor),
+              titleMedium: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontSize: 20, color: AppColors.whiteColor),
+              titleSmall: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontSize: 15, color: AppColors.whiteColor)),
           buttonTheme: ButtonThemeData(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppUI.borderRadius))),

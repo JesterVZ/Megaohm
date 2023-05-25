@@ -23,6 +23,7 @@ class AppUI {
       //backgroundColor: AppColors.appcolors,
       centerTitle: false,
       title: Text(title),
+      titleTextStyle: Theme.of(context).textTheme.titleMedium,
       actions: actions,
     );
   }

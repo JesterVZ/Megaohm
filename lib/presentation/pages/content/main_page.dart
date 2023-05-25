@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:megaohm_app/base/enums/data/averaging_level.dart';
 import 'package:megaohm_app/data/entities/get_data/get_data_request.dart';
+import 'package:megaohm_app/domain/models/sensor_model.dart';
 import 'package:megaohm_app/internal/injection_container.dart';
 import 'package:megaohm_app/presentation/bloc/get_data/get_data_bloc.dart';
 import 'package:megaohm_app/presentation/ui/app_ui.dart';
@@ -30,6 +31,9 @@ class _MainPage extends State<MainPage> {
 
   DateTime? _filterDateFrom;
   DateTime? _filterDateTo;
+
+  ///список счетчиков
+  List<List<SensorModel>> sensors = [];
   @override
   void initState() {
     super.initState();
@@ -45,7 +49,12 @@ class _MainPage extends State<MainPage> {
                 error: (message) => errorMessage = message,
                 getData: (result) {
                   loading = false;
-                  print(result);
+                  for (var x in result) {
+                    sensors.add(x.air!.sensors!
+                        .map((e) => SensorModel(h: e.h, sid: e.sid, t: e.t))
+                        .toList());
+                  }
+                  print(sensors);
                 },
                 loading: () => loading = true);
             return Scaffold(
@@ -66,26 +75,40 @@ class _MainPage extends State<MainPage> {
     _buildInputDataDialog();
   }
 
-  _buildChart() => loading
-      ? const CircularProgressIndicator()
-      : SfCartesianChart(
+  _buildChart() {
+    List<LineSeries<SensorModel, String>> lineSeries = [];
+    List<SensorModel> sensor1 = [];
+    List<SensorModel> sensor2 = [];
+
+    for (int i = 0; i < sensors.length; i++) {
+      sensor1.add(sensors[i][0]);
+    }
+    for (int i = 0; i < sensors.length; i++) {
+      sensor2.add(sensors[i][1]);
+    }
+    if (sensors.isNotEmpty) {
+      lineSeries.add(LineSeries<SensorModel, String>(
+          dataSource: sensor1,
+          dataLabelSettings: const DataLabelSettings(isVisible: true),
+          dataLabelMapper: (datum, index) => 'Тест',
+          xValueMapper: (SensorModel sensor, _) => sensor.h.toString(),
+          yValueMapper: (SensorModel sensor, _) => sensor.t));
+      lineSeries.add(LineSeries<SensorModel, String>(
+          dataSource: sensor2,
+          dataLabelSettings: const DataLabelSettings(isVisible: true),
+          xValueMapper: (SensorModel sensor, _) => sensor.h.toString(),
+          yValueMapper: (SensorModel sensor, _) => sensor.t));
+    }
+    if (loading) {
+      return const CircularProgressIndicator();
+    } else {
+      return SfCartesianChart(
           primaryXAxis: CategoryAxis(),
           title: ChartTitle(text: 'Датчики'),
           legend: Legend(isVisible: true),
-          series: <LineSeries<SalesData, String>>[
-              LineSeries<SalesData, String>(
-                  dataSource: <SalesData>[
-                    SalesData('Jan', 35),
-                    SalesData('Feb', 28),
-                    SalesData('Mar', 34),
-                    SalesData('Apr', 32),
-                    SalesData('May', 40)
-                  ],
-                  xValueMapper: (SalesData sales, _) => sales.year,
-                  yValueMapper: (SalesData sales, _) => sales.sales,
-                  // Enable data label
-                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
-            ]);
+          series: lineSeries);
+    }
+  }
 
   _buildInputDataDialog() async {
     var result = await AppBottomSheet.showBottomSheet(

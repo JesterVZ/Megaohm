@@ -20,9 +20,9 @@ GetDataRequest _$GetDataRequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$GetDataRequest {
-  DateTime get start_date => throw _privateConstructorUsedError;
-  DateTime get end_date => throw _privateConstructorUsedError;
-  Discrete get discrete => throw _privateConstructorUsedError;
+  String get start_date => throw _privateConstructorUsedError;
+  String get end_date => throw _privateConstructorUsedError;
+  String get discrete => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $GetDataRequestCopyWith<$Res> {
           GetDataRequest value, $Res Function(GetDataRequest) then) =
       _$GetDataRequestCopyWithImpl<$Res, GetDataRequest>;
   @useResult
-  $Res call({DateTime start_date, DateTime end_date, Discrete discrete});
+  $Res call({String start_date, String end_date, String discrete});
 }
 
 /// @nodoc
@@ -60,15 +60,15 @@ class _$GetDataRequestCopyWithImpl<$Res, $Val extends GetDataRequest>
       start_date: null == start_date
           ? _value.start_date
           : start_date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       end_date: null == end_date
           ? _value.end_date
           : end_date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       discrete: null == discrete
           ? _value.discrete
           : discrete // ignore: cast_nullable_to_non_nullable
-              as Discrete,
+              as String,
     ) as $Val);
   }
 }
@@ -81,7 +81,7 @@ abstract class _$$_GetDataRequestCopyWith<$Res>
       __$$_GetDataRequestCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime start_date, DateTime end_date, Discrete discrete});
+  $Res call({String start_date, String end_date, String discrete});
 }
 
 /// @nodoc
@@ -103,15 +103,15 @@ class __$$_GetDataRequestCopyWithImpl<$Res>
       start_date: null == start_date
           ? _value.start_date
           : start_date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       end_date: null == end_date
           ? _value.end_date
           : end_date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
       discrete: null == discrete
           ? _value.discrete
           : discrete // ignore: cast_nullable_to_non_nullable
-              as Discrete,
+              as String,
     ));
   }
 }
@@ -128,11 +128,11 @@ class _$_GetDataRequest implements _GetDataRequest {
       _$$_GetDataRequestFromJson(json);
 
   @override
-  final DateTime start_date;
+  final String start_date;
   @override
-  final DateTime end_date;
+  final String end_date;
   @override
-  final Discrete discrete;
+  final String discrete;
 
   @override
   String toString() {
@@ -172,19 +172,19 @@ class _$_GetDataRequest implements _GetDataRequest {
 
 abstract class _GetDataRequest implements GetDataRequest {
   const factory _GetDataRequest(
-      {required final DateTime start_date,
-      required final DateTime end_date,
-      required final Discrete discrete}) = _$_GetDataRequest;
+      {required final String start_date,
+      required final String end_date,
+      required final String discrete}) = _$_GetDataRequest;
 
   factory _GetDataRequest.fromJson(Map<String, dynamic> json) =
       _$_GetDataRequest.fromJson;
 
   @override
-  DateTime get start_date;
+  String get start_date;
   @override
-  DateTime get end_date;
+  String get end_date;
   @override
-  Discrete get discrete;
+  String get discrete;
   @override
   @JsonKey(ignore: true)
   _$$_GetDataRequestCopyWith<_$_GetDataRequest> get copyWith =>

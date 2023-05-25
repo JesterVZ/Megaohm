@@ -16,19 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GetDataEvent {
+  GetDataRequest get request => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getData,
+    required TResult Function(GetDataRequest request) getData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getData,
+    TResult? Function(GetDataRequest request)? getData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getData,
+    TResult Function(GetDataRequest request)? getData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -48,6 +49,10 @@ mixin _$GetDataEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $GetDataEventCopyWith<GetDataEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -55,6 +60,10 @@ abstract class $GetDataEventCopyWith<$Res> {
   factory $GetDataEventCopyWith(
           GetDataEvent value, $Res Function(GetDataEvent) then) =
       _$GetDataEventCopyWithImpl<$Res, GetDataEvent>;
+  @useResult
+  $Res call({GetDataRequest request});
+
+  $GetDataRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
@@ -66,12 +75,39 @@ class _$GetDataEventCopyWithImpl<$Res, $Val extends GetDataEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? request = null,
+  }) {
+    return _then(_value.copyWith(
+      request: null == request
+          ? _value.request
+          : request // ignore: cast_nullable_to_non_nullable
+              as GetDataRequest,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GetDataRequestCopyWith<$Res> get request {
+    return $GetDataRequestCopyWith<$Res>(_value.request, (value) {
+      return _then(_value.copyWith(request: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$GetDataCopyWith<$Res> {
+abstract class _$$GetDataCopyWith<$Res> implements $GetDataEventCopyWith<$Res> {
   factory _$$GetDataCopyWith(_$GetData value, $Res Function(_$GetData) then) =
       __$$GetDataCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({GetDataRequest request});
+
+  @override
+  $GetDataRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
@@ -80,51 +116,75 @@ class __$$GetDataCopyWithImpl<$Res>
     implements _$$GetDataCopyWith<$Res> {
   __$$GetDataCopyWithImpl(_$GetData _value, $Res Function(_$GetData) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? request = null,
+  }) {
+    return _then(_$GetData(
+      request: null == request
+          ? _value.request
+          : request // ignore: cast_nullable_to_non_nullable
+              as GetDataRequest,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$GetData implements GetData {
-  const _$GetData();
+  const _$GetData({required this.request});
+
+  @override
+  final GetDataRequest request;
 
   @override
   String toString() {
-    return 'GetDataEvent.getData()';
+    return 'GetDataEvent.getData(request: $request)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetData);
+        (other.runtimeType == runtimeType &&
+            other is _$GetData &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, request);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetDataCopyWith<_$GetData> get copyWith =>
+      __$$GetDataCopyWithImpl<_$GetData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getData,
+    required TResult Function(GetDataRequest request) getData,
   }) {
-    return getData();
+    return getData(request);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getData,
+    TResult? Function(GetDataRequest request)? getData,
   }) {
-    return getData?.call();
+    return getData?.call(request);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getData,
+    TResult Function(GetDataRequest request)? getData,
     required TResult orElse(),
   }) {
     if (getData != null) {
-      return getData();
+      return getData(request);
     }
     return orElse();
   }
@@ -159,7 +219,14 @@ class _$GetData implements GetData {
 }
 
 abstract class GetData implements GetDataEvent {
-  const factory GetData() = _$GetData;
+  const factory GetData({required final GetDataRequest request}) = _$GetData;
+
+  @override
+  GetDataRequest get request;
+  @override
+  @JsonKey(ignore: true)
+  _$$GetDataCopyWith<_$GetData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -168,7 +235,7 @@ mixin _$GetDataState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(List<GetDataResponse> response) getData,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -176,7 +243,7 @@ mixin _$GetDataState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(List<GetDataResponse> response)? getData,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -184,7 +251,7 @@ mixin _$GetDataState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(GetDataResponse response)? getData,
+    TResult Function(List<GetDataResponse> response)? getData,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -273,7 +340,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(List<GetDataResponse> response) getData,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -284,7 +351,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(List<GetDataResponse> response)? getData,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -295,7 +362,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(GetDataResponse response)? getData,
+    TResult Function(List<GetDataResponse> response)? getData,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -386,7 +453,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(List<GetDataResponse> response) getData,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -397,7 +464,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(List<GetDataResponse> response)? getData,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -408,7 +475,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(GetDataResponse response)? getData,
+    TResult Function(List<GetDataResponse> response)? getData,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -466,9 +533,7 @@ abstract class _$$_GetDataCopyWith<$Res> {
           _$_GetData value, $Res Function(_$_GetData) then) =
       __$$_GetDataCopyWithImpl<$Res>;
   @useResult
-  $Res call({GetDataResponse response});
-
-  $GetDataResponseCopyWith<$Res> get response;
+  $Res call({List<GetDataResponse> response});
 }
 
 /// @nodoc
@@ -485,28 +550,25 @@ class __$$_GetDataCopyWithImpl<$Res>
   }) {
     return _then(_$_GetData(
       null == response
-          ? _value.response
+          ? _value._response
           : response // ignore: cast_nullable_to_non_nullable
-              as GetDataResponse,
+              as List<GetDataResponse>,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $GetDataResponseCopyWith<$Res> get response {
-    return $GetDataResponseCopyWith<$Res>(_value.response, (value) {
-      return _then(_value.copyWith(response: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$_GetData implements _GetData {
-  const _$_GetData(this.response);
+  const _$_GetData(final List<GetDataResponse> response) : _response = response;
 
+  final List<GetDataResponse> _response;
   @override
-  final GetDataResponse response;
+  List<GetDataResponse> get response {
+    if (_response is EqualUnmodifiableListView) return _response;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_response);
+  }
 
   @override
   String toString() {
@@ -518,12 +580,12 @@ class _$_GetData implements _GetData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetData &&
-            (identical(other.response, response) ||
-                other.response == response));
+            const DeepCollectionEquality().equals(other._response, _response));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, response);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_response));
 
   @JsonKey(ignore: true)
   @override
@@ -536,7 +598,7 @@ class _$_GetData implements _GetData {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(List<GetDataResponse> response) getData,
     required TResult Function(String message) error,
   }) {
     return getData(response);
@@ -547,7 +609,7 @@ class _$_GetData implements _GetData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(List<GetDataResponse> response)? getData,
     TResult? Function(String message)? error,
   }) {
     return getData?.call(response);
@@ -558,7 +620,7 @@ class _$_GetData implements _GetData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(GetDataResponse response)? getData,
+    TResult Function(List<GetDataResponse> response)? getData,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -607,9 +669,9 @@ class _$_GetData implements _GetData {
 }
 
 abstract class _GetData implements GetDataState {
-  const factory _GetData(final GetDataResponse response) = _$_GetData;
+  const factory _GetData(final List<GetDataResponse> response) = _$_GetData;
 
-  GetDataResponse get response;
+  List<GetDataResponse> get response;
   @JsonKey(ignore: true)
   _$$_GetDataCopyWith<_$_GetData> get copyWith =>
       throw _privateConstructorUsedError;
@@ -681,7 +743,7 @@ class _$_ErrorGetData implements _ErrorGetData {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(GetDataResponse response) getData,
+    required TResult Function(List<GetDataResponse> response) getData,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -692,7 +754,7 @@ class _$_ErrorGetData implements _ErrorGetData {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(GetDataResponse response)? getData,
+    TResult? Function(List<GetDataResponse> response)? getData,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -703,7 +765,7 @@ class _$_ErrorGetData implements _ErrorGetData {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(GetDataResponse response)? getData,
+    TResult Function(List<GetDataResponse> response)? getData,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

@@ -4,9 +4,10 @@ import 'package:megaohm_app/base/http/http_client.dart';
 import 'package:megaohm_app/const/app.dart';
 import 'package:megaohm_app/core/error/exceptions.dart';
 import 'package:megaohm_app/data/entities/get_data/get_data_request.dart';
+import 'package:megaohm_app/data/entities/get_data/get_data_response.dart';
 
 abstract class GetDataRemoteDataSource {
-  Future<bool> getData(GetDataRequest request);
+  Future<List<GetDataResponse>> getData(GetDataRequest request);
 }
 
 class GetDataRemoteDataSourceImpl implements GetDataRemoteDataSource {
@@ -14,11 +15,17 @@ class GetDataRemoteDataSourceImpl implements GetDataRemoteDataSource {
   ApiClient? httpClient;
 
   @override
-  Future<bool> getData(GetDataRequest request) async {
+  Future<List<GetDataResponse>> getData(GetDataRequest request) async {
     Response response = await httpClient!.sendRequest(
         request: request, url: '/tm/${App.testId}', method: Method.get);
     if (response.statusCode == 200) {
-      return true;
+      List<GetDataResponse> result = [];
+      if (response.data is List) {
+        for (int i = 0; i < response.data.length; i++) {
+          result.add(GetDataResponse.fromJson(response.data[i]));
+        }
+      }
+      return result;
     } else {
       throw ServerException();
     }

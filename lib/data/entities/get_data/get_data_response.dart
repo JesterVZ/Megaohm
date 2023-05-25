@@ -8,6 +8,7 @@ part 'get_data_response.g.dart';
 class GetDataResponse with _$GetDataResponse {
   const factory GetDataResponse({required Air? air, required String? ts}) =
       _GetDataResponse;
+
   factory GetDataResponse.fromJson(Map<String, dynamic> json) =>
       _$GetDataResponseFromJson(json);
 }

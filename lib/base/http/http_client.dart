@@ -8,10 +8,10 @@ class ApiClient {
   final Dio _apiClient = _getDio(baseUrl: '');
   static Dio _getDio({String? baseUrl}) {
     return Dio(BaseOptions(
-      baseUrl: baseUrl ?? '',
-      connectTimeout: App.apiRequestTimeout,
-      contentType: Headers.jsonContentType,
-    ));
+        baseUrl: baseUrl ?? '',
+        connectTimeout: App.apiRequestTimeout,
+        contentType: Headers.jsonContentType,
+        headers: {'Authorization': 'Bearer ${App.testJWT}'}));
   }
 
   Future<Response> sendRequest(
@@ -20,8 +20,10 @@ class ApiClient {
       required Method method}) async {
     switch (method) {
       case Method.get:
-        return await _apiClient.get("${App.baseUrl}$url",
-            queryParameters: jsonDecode(jsonEncode(request)));
+        return await _apiClient.get(
+          "${App.baseUrl}$url",
+          queryParameters: jsonDecode(jsonEncode(request)),
+        );
       case Method.post:
         return await _apiClient.post("${App.baseUrl}$url",
             data: FormData.fromMap(jsonDecode(jsonEncode(request))));

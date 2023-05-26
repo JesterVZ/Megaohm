@@ -10,6 +10,7 @@ import 'package:megaohm_app/presentation/bloc/get_data/get_data_bloc.dart';
 import 'package:megaohm_app/presentation/ui/app_ui.dart';
 import 'package:megaohm_app/presentation/widgets/dialogs/app_bottom_sheet.dart';
 import 'package:megaohm_app/presentation/widgets/dialogs/choose_detail_type_dialog.dart';
+import 'package:megaohm_app/presentation/widgets/dialogs/information_dialog.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class MainPage extends StatefulWidget {
@@ -46,12 +47,17 @@ class _MainPage extends State<MainPage> {
           builder: (context, state) {
             state.when(
                 initial: () => loading = false,
-                error: (message) => errorMessage = message,
+                error: (message) {
+                  loading = false;
+                  errorMessage = message;
+                  _show();
+                },
                 getData: (result) {
                   loading = false;
+                  sensors.clear();
                   for (var x in result) {
                     sensors.add(x.air!.sensors!
-                        .map((e) => SensorModel(h: e.h, sid: e.sid, t: e.t))
+                        .map((e) => SensorModel(h: e.h, t: e.t))
                         .toList());
                   }
                   print(sensors);
@@ -67,6 +73,12 @@ class _MainPage extends State<MainPage> {
           },
         ),
       );
+
+  _show() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      InformationDialog.show(context, 'ОШИБКА!', errorMessage!);
+    });
+  }
 
   _buildFloatingActionButton() => FloatingActionButton(
       onPressed: _openBottomSheet, child: const Icon(Icons.filter_alt_rounded));
@@ -90,14 +102,13 @@ class _MainPage extends State<MainPage> {
       lineSeries.add(LineSeries<SensorModel, String>(
           dataSource: sensor1,
           dataLabelSettings: const DataLabelSettings(isVisible: true),
-          dataLabelMapper: (datum, index) => 'Тест',
-          xValueMapper: (SensorModel sensor, _) => sensor.h.toString(),
-          yValueMapper: (SensorModel sensor, _) => sensor.t));
+          xValueMapper: (SensorModel sensor, _) => sensor.t.toString(),
+          yValueMapper: (SensorModel sensor, _) => sensor.h));
       lineSeries.add(LineSeries<SensorModel, String>(
           dataSource: sensor2,
           dataLabelSettings: const DataLabelSettings(isVisible: true),
-          xValueMapper: (SensorModel sensor, _) => sensor.h.toString(),
-          yValueMapper: (SensorModel sensor, _) => sensor.t));
+          xValueMapper: (SensorModel sensor, _) => sensor.t.toString(),
+          yValueMapper: (SensorModel sensor, _) => sensor.h));
     }
     if (loading) {
       return const CircularProgressIndicator();

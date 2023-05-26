@@ -38,6 +38,8 @@ class AppUI {
     horizontal: _padding,
   );
 
+  static const contentPadding = EdgeInsets.all(_paddingXS);
+
   static const textFieldInputBorder = OutlineInputBorder();
 
   static const contentHorizontalSpacing = SizedBox(width: _padding);

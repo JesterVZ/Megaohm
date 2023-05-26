@@ -114,7 +114,7 @@ class __$$_SensorCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Sensor implements _Sensor {
-  const _$_Sensor({required this.h, this.sid, this.t});
+  const _$_Sensor({required this.h, required this.sid, required this.t});
 
   factory _$_Sensor.fromJson(Map<String, dynamic> json) =>
       _$$_SensorFromJson(json);
@@ -162,8 +162,8 @@ class _$_Sensor implements _Sensor {
 abstract class _Sensor implements Sensor {
   const factory _Sensor(
       {required final double? h,
-      final String? sid,
-      final double? t}) = _$_Sensor;
+      required final String? sid,
+      required final double? t}) = _$_Sensor;
 
   factory _Sensor.fromJson(Map<String, dynamic> json) = _$_Sensor.fromJson;
 

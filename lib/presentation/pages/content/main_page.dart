@@ -2,8 +2,11 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:megaohm_app/base/enums/chart_type/chart_type.dart';
 import 'package:megaohm_app/base/enums/data/averaging_level.dart';
 import 'package:megaohm_app/data/entities/get_data/get_data_request.dart';
+import 'package:megaohm_app/domain/models/air_model.dart';
+import 'package:megaohm_app/domain/models/data_response_model.dart';
 import 'package:megaohm_app/domain/models/sensor_model.dart';
 import 'package:megaohm_app/internal/injection_container.dart';
 import 'package:megaohm_app/presentation/bloc/get_data/get_data_bloc.dart';
@@ -34,7 +37,7 @@ class _MainPage extends State<MainPage> {
   DateTime? _filterDateTo;
 
   ///список счетчиков
-  List<List<SensorModel>> sensors = [];
+  List<DataResponseModel> responses = [];
   @override
   void initState() {
     super.initState();
@@ -50,23 +53,28 @@ class _MainPage extends State<MainPage> {
                 error: (message) {
                   loading = false;
                   errorMessage = message;
-                  _show();
+                  _showDialog();
                 },
                 getData: (result) {
                   loading = false;
-                  sensors.clear();
+                  responses.clear();
                   for (var x in result) {
-                    sensors.add(x.air!.sensors!
-                        .map((e) => SensorModel(h: e.h, t: e.t))
-                        .toList());
+                    responses.add(DataResponseModel(
+                        air: AirModel(
+                            sensors: x.air!.sensors!
+                                .map((e) => SensorModel(h: e.h, t: e.t))
+                                .toList()),
+                        ts: x.ts!));
                   }
-                  print(sensors);
+                  print(responses);
                 },
                 loading: () => loading = true);
             return Scaffold(
               appBar: AppUI.appBar(context: context, title: "Умные теплицы"),
               body: Center(
-                child: _buildChart(),
+                child: loading
+                    ? const CircularProgressIndicator()
+                    : _buildContent(),
               ),
               floatingActionButton: _buildFloatingActionButton(),
             );
@@ -74,7 +82,22 @@ class _MainPage extends State<MainPage> {
         ),
       );
 
-  _show() {
+  _buildContent() => SingleChildScrollView(
+        child: Column(children: [
+          Padding(
+              padding: AppUI.contentPadding,
+              child: Container(
+                child: _buildChart(ChartType.tempetature),
+              )),
+          Padding(
+              padding: AppUI.contentPadding,
+              child: Container(
+                child: _buildChart(ChartType.humidity),
+              )),
+        ]),
+      );
+
+  _showDialog() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       InformationDialog.show(context, 'ОШИБКА!', errorMessage!);
     });
@@ -87,38 +110,41 @@ class _MainPage extends State<MainPage> {
     _buildInputDataDialog();
   }
 
-  _buildChart() {
-    List<LineSeries<SensorModel, String>> lineSeries = [];
-    List<SensorModel> sensor1 = [];
-    List<SensorModel> sensor2 = [];
+  _buildChart(ChartType type) {
+    List<LineSeries<DataResponseModel, DateTime>> lineSeries = [];
+    List<DataResponseModel> data = [];
 
-    for (int i = 0; i < sensors.length; i++) {
-      sensor1.add(sensors[i][0]);
+    for (int i = 0; i < responses.length; i++) {
+      responses[i].isoDateTime = DateTime.fromMillisecondsSinceEpoch(
+          int.parse(responses[i].ts.split('.')[0]) * 1000);
+      data.add(responses[i]);
     }
-    for (int i = 0; i < sensors.length; i++) {
-      sensor2.add(sensors[i][1]);
-    }
-    if (sensors.isNotEmpty) {
-      lineSeries.add(LineSeries<SensorModel, String>(
-          dataSource: sensor1,
+    if (responses.isNotEmpty) {
+      lineSeries.add(LineSeries<DataResponseModel, DateTime>(
+          dataSource: data,
           dataLabelSettings: const DataLabelSettings(isVisible: true),
-          xValueMapper: (SensorModel sensor, _) => sensor.t.toString(),
-          yValueMapper: (SensorModel sensor, _) => sensor.h));
-      lineSeries.add(LineSeries<SensorModel, String>(
-          dataSource: sensor2,
+          xValueMapper: (DataResponseModel res, _) => res.isoDateTime,
+          yValueMapper: (DataResponseModel res, _) =>
+              type == ChartType.tempetature
+                  ? res.air.sensors[0].t
+                  : res.air.sensors[0].h));
+      lineSeries.add(LineSeries<DataResponseModel, DateTime>(
+          dataSource: data,
           dataLabelSettings: const DataLabelSettings(isVisible: true),
-          xValueMapper: (SensorModel sensor, _) => sensor.t.toString(),
-          yValueMapper: (SensorModel sensor, _) => sensor.h));
+          xValueMapper: (DataResponseModel res, _) => res.isoDateTime,
+          yValueMapper: (DataResponseModel res, _) =>
+              type == ChartType.tempetature
+                  ? res.air.sensors[1].t
+                  : res.air.sensors[1].h));
     }
-    if (loading) {
-      return const CircularProgressIndicator();
-    } else {
-      return SfCartesianChart(
-          primaryXAxis: CategoryAxis(),
-          title: ChartTitle(text: 'Датчики'),
-          legend: Legend(isVisible: true),
-          series: lineSeries);
-    }
+    return SfCartesianChart(
+        primaryXAxis: CategoryAxis(),
+        title: ChartTitle(
+            text: type == ChartType.tempetature
+                ? 'График температуры'
+                : 'График влажности'),
+        legend: Legend(isVisible: true),
+        series: lineSeries);
   }
 
   _buildInputDataDialog() async {
@@ -239,11 +265,4 @@ class _MainPage extends State<MainPage> {
       },
     );
   }
-}
-
-class SalesData {
-  SalesData(this.year, this.sales);
-
-  final String year;
-  final double sales;
 }

@@ -8,6 +8,6 @@ abstract class Failure extends Equatable {
 
 // ignore: must_be_immutable
 class ServerFailure extends Failure {
-  String? message;
+  Exception message;
   ServerFailure(this.message);
 }

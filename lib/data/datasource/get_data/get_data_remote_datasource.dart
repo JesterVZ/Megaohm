@@ -18,16 +18,24 @@ class GetDataRemoteDataSourceImpl implements GetDataRemoteDataSource {
   Future<List<GetDataResponse>> getData(GetDataRequest request) async {
     Response response = await httpClient!.sendRequest(
         request: request, url: '/tm/${App.testId}', method: Method.get);
-    if (response.statusCode == 200) {
-      List<GetDataResponse> result = [];
-      if (response.data is List) {
-        for (int i = 0; i < response.data.length; i++) {
-          result.add(GetDataResponse.fromJson(response.data[i]));
+    switch (response.statusCode) {
+      case 200:
+        List<GetDataResponse> result = [];
+        if (response.data is List) {
+          for (int i = 0; i < response.data.length; i++) {
+            result.add(GetDataResponse.fromJson(response.data[i]));
+          }
         }
-      }
-      return result;
-    } else {
-      throw ServerException();
+        return result;
+      case 400:
+        throw BadRequestException();
+      case 403:
+        throw ForbiddenException();
+      case 429:
+        throw TooManyRequestException();
+      case 500:
+        throw UnexpectedException();
     }
+    throw UnexpectedException();
   }
 }

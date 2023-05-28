@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:megaohm_app/base/enums/chart_type/chart_type.dart';
 import 'package:megaohm_app/base/enums/data/averaging_level.dart';
+import 'package:megaohm_app/base/extensions/ext.dart';
+import 'package:megaohm_app/core/error/exceptions.dart';
 import 'package:megaohm_app/data/entities/get_data/get_data_request.dart';
 import 'package:megaohm_app/domain/models/air_model.dart';
 import 'package:megaohm_app/domain/models/data_response_model.dart';
@@ -15,6 +17,7 @@ import 'package:megaohm_app/presentation/widgets/dialogs/app_bottom_sheet.dart';
 import 'package:megaohm_app/presentation/widgets/dialogs/choose_detail_type_dialog.dart';
 import 'package:megaohm_app/presentation/widgets/dialogs/information_dialog.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -52,7 +55,28 @@ class _MainPage extends State<MainPage> {
                 initial: () => loading = false,
                 error: (message) {
                   loading = false;
-                  errorMessage = message;
+                  switch (message.runtimeType) {
+                    case BadRequestException:
+                      errorMessage =
+                          AppLocalizations.of(context)!.wrong_range_exc;
+                      break;
+                    case ForbiddenException:
+                      errorMessage =
+                          AppLocalizations.of(context)!.forbidden_exc;
+                      break;
+                    case DevideNotFoundException:
+                      errorMessage =
+                          AppLocalizations.of(context)!.device_not_found_exc;
+                      break;
+                    case TooManyRequestException:
+                      errorMessage =
+                          AppLocalizations.of(context)!.too_many_requests_exc;
+                      break;
+                    case UnexpectedException:
+                      errorMessage =
+                          AppLocalizations.of(context)!.unexpected_exc;
+                      break;
+                  }
                   _showDialog();
                 },
                 getData: (result) {
@@ -70,7 +94,9 @@ class _MainPage extends State<MainPage> {
                 },
                 loading: () => loading = true);
             return Scaffold(
-              appBar: AppUI.appBar(context: context, title: "Умные теплицы"),
+              appBar: AppUI.appBar(
+                  context: context,
+                  title: AppLocalizations.of(context)!.app_title),
               body: Center(
                 child: loading
                     ? const CircularProgressIndicator()
@@ -99,7 +125,8 @@ class _MainPage extends State<MainPage> {
 
   _showDialog() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      InformationDialog.show(context, 'ОШИБКА!', errorMessage!);
+      InformationDialog.show(
+          context, AppLocalizations.of(context)!.error, errorMessage!);
     });
   }
 
@@ -111,27 +138,32 @@ class _MainPage extends State<MainPage> {
   }
 
   _buildChart(ChartType type) {
-    List<LineSeries<DataResponseModel, DateTime>> lineSeries = [];
+    List<LineSeries<DataResponseModel, String>> lineSeries = [];
     List<DataResponseModel> data = [];
 
     for (int i = 0; i < responses.length; i++) {
       responses[i].isoDateTime = DateTime.fromMillisecondsSinceEpoch(
           int.parse(responses[i].ts.split('.')[0]) * 1000);
+
       data.add(responses[i]);
     }
     if (responses.isNotEmpty) {
-      lineSeries.add(LineSeries<DataResponseModel, DateTime>(
+      lineSeries.add(LineSeries<DataResponseModel, String>(
           dataSource: data,
+          name: '${AppLocalizations.of(context)!.sensor} 1',
           dataLabelSettings: const DataLabelSettings(isVisible: true),
-          xValueMapper: (DataResponseModel res, _) => res.isoDateTime,
+          xValueMapper: (DataResponseModel res, _) =>
+              res.isoDateTime!.toShortString(),
           yValueMapper: (DataResponseModel res, _) =>
               type == ChartType.tempetature
                   ? res.air.sensors[0].t
                   : res.air.sensors[0].h));
-      lineSeries.add(LineSeries<DataResponseModel, DateTime>(
+      lineSeries.add(LineSeries<DataResponseModel, String>(
           dataSource: data,
+          name: '${AppLocalizations.of(context)!.sensor} 2',
           dataLabelSettings: const DataLabelSettings(isVisible: true),
-          xValueMapper: (DataResponseModel res, _) => res.isoDateTime,
+          xValueMapper: (DataResponseModel res, _) =>
+              res.isoDateTime!.toShortString(),
           yValueMapper: (DataResponseModel res, _) =>
               type == ChartType.tempetature
                   ? res.air.sensors[1].t
@@ -141,15 +173,15 @@ class _MainPage extends State<MainPage> {
         primaryXAxis: CategoryAxis(),
         title: ChartTitle(
             text: type == ChartType.tempetature
-                ? 'График температуры'
-                : 'График влажности'),
+                ? AppLocalizations.of(context)!.temp_chart
+                : AppLocalizations.of(context)!.hum_chart),
         legend: Legend(isVisible: true),
         series: lineSeries);
   }
 
   _buildInputDataDialog() async {
     var result = await AppBottomSheet.showBottomSheet(
-        "Выберите диапазон",
+        AppLocalizations.of(context)!.select_range,
         [
           AppUI.contentVerticalSpacingExtraSmall,
           _buildFilterDate(),
@@ -182,7 +214,7 @@ class _MainPage extends State<MainPage> {
   _buildFilterDateFrom() {
     return Expanded(
         child: _buildFilterDateFiled(
-            labelText: "От",
+            labelText: AppLocalizations.of(context)!.from,
             getInitValueFunc: () => _filterDateFrom,
             onChanged: (value) => _filterDateFrom = value));
   }
@@ -190,7 +222,7 @@ class _MainPage extends State<MainPage> {
   _buildFilterDateTo() {
     return Expanded(
         child: _buildFilterDateFiled(
-            labelText: "До",
+            labelText: AppLocalizations.of(context)!.to,
             getInitValueFunc: () => _filterDateTo,
             onChanged: (value) => _filterDateTo = value));
   }
@@ -199,13 +231,13 @@ class _MainPage extends State<MainPage> {
         padding: AppUI.bottomSheetContentPadding,
         child: OutlinedButton(
             onPressed: () async {
-              var result =
-                  await ChooseDetailTypeDialog.show(context, 'Тип детализации');
+              var result = await ChooseDetailTypeDialog.show(
+                  context, AppLocalizations.of(context)!.detail_type);
               if (result != null) {
                 discrete = result;
               }
             },
-            child: const Text('Тип детализации')),
+            child: Text(AppLocalizations.of(context)!.detail_type)),
       );
 
   _buildFilterButtons() {
@@ -224,7 +256,7 @@ class _MainPage extends State<MainPage> {
     return Expanded(
       child: TextButton(
         style: TextButton.styleFrom(foregroundColor: Colors.red),
-        child: const Text("Отмена"),
+        child: Text(AppLocalizations.of(context)!.cancel),
         onPressed: () => Navigator.pop(context, false),
       ),
     );
@@ -237,7 +269,7 @@ class _MainPage extends State<MainPage> {
       onPressed: () {
         Navigator.pop(context, true);
       },
-      child: const Text("Применить"),
+      child: Text(AppLocalizations.of(context)!.accept),
     ));
   }
 
@@ -252,7 +284,7 @@ class _MainPage extends State<MainPage> {
       ),
       style:
           Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.black),
-      format: DateFormat.yMd(),
+      format: DateFormat.yMd(Localizations.localeOf(context).languageCode),
       initialValue: getInitValueFunc(),
       onChanged: onChanged,
       onShowPicker: (context, currentValue) {

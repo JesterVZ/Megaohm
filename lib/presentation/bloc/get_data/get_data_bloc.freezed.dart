@@ -236,7 +236,7 @@ mixin _$GetDataState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<GetDataResponse> response) getData,
-    required TResult Function(String message) error,
+    required TResult Function(Exception message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -244,7 +244,7 @@ mixin _$GetDataState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<GetDataResponse> response)? getData,
-    TResult? Function(String message)? error,
+    TResult? Function(Exception message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -252,7 +252,7 @@ mixin _$GetDataState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<GetDataResponse> response)? getData,
-    TResult Function(String message)? error,
+    TResult Function(Exception message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -341,7 +341,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<GetDataResponse> response) getData,
-    required TResult Function(String message) error,
+    required TResult Function(Exception message) error,
   }) {
     return initial();
   }
@@ -352,7 +352,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<GetDataResponse> response)? getData,
-    TResult? Function(String message)? error,
+    TResult? Function(Exception message)? error,
   }) {
     return initial?.call();
   }
@@ -363,7 +363,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<GetDataResponse> response)? getData,
-    TResult Function(String message)? error,
+    TResult Function(Exception message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -454,7 +454,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<GetDataResponse> response) getData,
-    required TResult Function(String message) error,
+    required TResult Function(Exception message) error,
   }) {
     return loading();
   }
@@ -465,7 +465,7 @@ class _$_Loading implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<GetDataResponse> response)? getData,
-    TResult? Function(String message)? error,
+    TResult? Function(Exception message)? error,
   }) {
     return loading?.call();
   }
@@ -476,7 +476,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<GetDataResponse> response)? getData,
-    TResult Function(String message)? error,
+    TResult Function(Exception message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -599,7 +599,7 @@ class _$_GetData implements _GetData {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<GetDataResponse> response) getData,
-    required TResult Function(String message) error,
+    required TResult Function(Exception message) error,
   }) {
     return getData(response);
   }
@@ -610,7 +610,7 @@ class _$_GetData implements _GetData {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<GetDataResponse> response)? getData,
-    TResult? Function(String message)? error,
+    TResult? Function(Exception message)? error,
   }) {
     return getData?.call(response);
   }
@@ -621,7 +621,7 @@ class _$_GetData implements _GetData {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<GetDataResponse> response)? getData,
-    TResult Function(String message)? error,
+    TResult Function(Exception message)? error,
     required TResult orElse(),
   }) {
     if (getData != null) {
@@ -683,7 +683,7 @@ abstract class _$$_ErrorGetDataCopyWith<$Res> {
           _$_ErrorGetData value, $Res Function(_$_ErrorGetData) then) =
       __$$_ErrorGetDataCopyWithImpl<$Res>;
   @useResult
-  $Res call({String message});
+  $Res call({Exception message});
 }
 
 /// @nodoc
@@ -703,7 +703,7 @@ class __$$_ErrorGetDataCopyWithImpl<$Res>
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Exception,
     ));
   }
 }
@@ -714,7 +714,7 @@ class _$_ErrorGetData implements _ErrorGetData {
   const _$_ErrorGetData(this.message);
 
   @override
-  final String message;
+  final Exception message;
 
   @override
   String toString() {
@@ -744,7 +744,7 @@ class _$_ErrorGetData implements _ErrorGetData {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<GetDataResponse> response) getData,
-    required TResult Function(String message) error,
+    required TResult Function(Exception message) error,
   }) {
     return error(message);
   }
@@ -755,7 +755,7 @@ class _$_ErrorGetData implements _ErrorGetData {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<GetDataResponse> response)? getData,
-    TResult? Function(String message)? error,
+    TResult? Function(Exception message)? error,
   }) {
     return error?.call(message);
   }
@@ -766,7 +766,7 @@ class _$_ErrorGetData implements _ErrorGetData {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<GetDataResponse> response)? getData,
-    TResult Function(String message)? error,
+    TResult Function(Exception message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -814,9 +814,9 @@ class _$_ErrorGetData implements _ErrorGetData {
 }
 
 abstract class _ErrorGetData implements GetDataState {
-  const factory _ErrorGetData(final String message) = _$_ErrorGetData;
+  const factory _ErrorGetData(final Exception message) = _$_ErrorGetData;
 
-  String get message;
+  Exception get message;
   @JsonKey(ignore: true)
   _$$_ErrorGetDataCopyWith<_$_ErrorGetData> get copyWith =>
       throw _privateConstructorUsedError;

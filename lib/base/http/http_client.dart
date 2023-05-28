@@ -18,15 +18,19 @@ class ApiClient {
       {required dynamic request,
       required String url,
       required Method method}) async {
-    switch (method) {
-      case Method.get:
-        return await _apiClient.get(
-          "${App.baseUrl}$url",
-          queryParameters: jsonDecode(jsonEncode(request)),
-        );
-      case Method.post:
-        return await _apiClient.post("${App.baseUrl}$url",
-            data: FormData.fromMap(jsonDecode(jsonEncode(request))));
+    try {
+      switch (method) {
+        case Method.get:
+          return await _apiClient.get(
+            "${App.baseUrl}$url",
+            queryParameters: jsonDecode(jsonEncode(request)),
+          );
+        case Method.post:
+          return await _apiClient.post("${App.baseUrl}$url",
+              data: FormData.fromMap(jsonDecode(jsonEncode(request))));
+      }
+    } on DioError catch (e) {
+      return e.response!;
     }
   }
 }

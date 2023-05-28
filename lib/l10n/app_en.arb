@@ -1,0 +1,22 @@
+{
+    "app_title": "Smart greenhouses",
+    "temp_chart": "Temperature graph",
+    "hum_chart": "Humidity hraph",
+    "sensor": "Sensor",
+    "detail_type": "Detail type",
+    "cancel": "Cancel",
+    "accept": "Accept",
+    "error": "Error",
+    "select_range": "Select range",
+    "from": "From",
+    "to": "To",
+    "hourly": "Hourly",
+    "daily": "Daily",
+    "monthly": "Monthly",
+
+    "wrong_range_exc":"Data range selected incorrectly!",
+    "forbidden_exc": "Forbidden!",
+    "device_not_found_exc": "Devide not found!",
+    "too_many_requests_exc": "Too many requests",
+    "unexpected_exc": "Unexpexted exception"
+}

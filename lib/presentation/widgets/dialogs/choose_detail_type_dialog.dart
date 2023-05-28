@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:megaohm_app/base/enums/data/averaging_level.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class ChooseDetailTypeDialog extends StatefulWidget {
@@ -38,13 +39,13 @@ class _ChooseDetailTypeDialogState extends State<ChooseDetailTypeDialog> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Назад'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context, discrete);
             },
-            child: const Text('Подтвердить'),
+            child: Text(AppLocalizations.of(context)!.accept),
           ),
         ],
       );
@@ -54,7 +55,7 @@ class _ChooseDetailTypeDialogState extends State<ChooseDetailTypeDialog> {
           children: [
             ListTile(
               title: Text(
-                'hourly',
+                AppLocalizations.of(context)!.hourly,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!
@@ -71,7 +72,7 @@ class _ChooseDetailTypeDialogState extends State<ChooseDetailTypeDialog> {
             ),
             ListTile(
               title: Text(
-                'daily',
+                AppLocalizations.of(context)!.daily,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!
@@ -88,7 +89,7 @@ class _ChooseDetailTypeDialogState extends State<ChooseDetailTypeDialog> {
             ),
             ListTile(
               title: Text(
-                'monthly',
+                AppLocalizations.of(context)!.monthly,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!

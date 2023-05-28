@@ -20,7 +20,7 @@ class GetDataBloc extends Bloc<GetDataEvent, GetDataState> {
 
       result.fold((failure) {
         if (failure is ServerFailure) {
-          emit(GetDataState.error(failure.message ?? "Null message"));
+          emit(GetDataState.error(failure.message));
         }
       }, (result) {
         emit(GetDataState.getData(result));
